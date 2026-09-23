@@ -948,7 +948,16 @@ private func extractAccountManagerState(records: AccountRecordsView<TelegramAcco
                 if Bundle.main.appStoreReceiptURL?.lastPathComponent == "sandboxReceipt" {
                     icons.append(PresentationAppIcon(name: "SGBeta", imageName: "SGBeta"))
                 }
-                
+
+                // Shadowgram: Swiftgram icon assets aren't bundled in this fork, ship our own set
+                icons = [
+                    PresentationAppIcon(name: "ShadowDark", imageName: "ShadowDark", isDefault: true),
+                    PresentationAppIcon(name: "ShadowViolet", imageName: "ShadowViolet"),
+                    PresentationAppIcon(name: "ShadowBlue", imageName: "ShadowBlue"),
+                    PresentationAppIcon(name: "ShadowLight", imageName: "ShadowLight"),
+                    PresentationAppIcon(name: "ShadowRed", imageName: "ShadowRed")
+                ]
+
                 return icons
             } else {
                 return []

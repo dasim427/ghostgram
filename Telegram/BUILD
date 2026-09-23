@@ -306,6 +306,11 @@ alternate_icon_folders = [
     "Premium",
     "PremiumBlack",
     "PremiumTurbo",
+    "ShadowDark",
+    "ShadowViolet",
+    "ShadowBlue",
+    "ShadowLight",
+    "ShadowRed",
 ]
 
 composer_icon_folders = ["Telegram"]

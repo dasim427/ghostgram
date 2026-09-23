@@ -6,11 +6,13 @@ import TelegramCore
 import TelegramPresentationData
 import ItemListUI
 import AccountContext
+import TelegramUIPreferences
 
 // MARK: - Entry Definition
 
 private enum GhostgramSettingsSection: Int32 {
     case features
+    case appearance
 }
 
 private enum GhostgramSettingsEntry: ItemListNodeEntry {
@@ -21,9 +23,16 @@ private enum GhostgramSettingsEntry: ItemListNodeEntry {
     case voiceMorpher(PresentationTheme, String, String)
     case sendDelay(PresentationTheme, String, String)
     case info(PresentationTheme, String)
-    
+    case shadowTheme(PresentationTheme, String)
+    case shadowThemeInfo(PresentationTheme, String)
+
     var section: ItemListSectionId {
-        return GhostgramSettingsSection.features.rawValue
+        switch self {
+        case .shadowTheme, .shadowThemeInfo:
+            return GhostgramSettingsSection.appearance.rawValue
+        default:
+            return GhostgramSettingsSection.features.rawValue
+        }
     }
     
     var stableId: Int32 {
@@ -42,6 +51,10 @@ private enum GhostgramSettingsEntry: ItemListNodeEntry {
             return 5
         case .info:
             return 6
+        case .shadowTheme:
+            return 7
+        case .shadowThemeInfo:
+            return 8
         }
     }
     
@@ -85,6 +98,16 @@ private enum GhostgramSettingsEntry: ItemListNodeEntry {
             return false
         case let .info(lhsTheme, lhsText):
             if case let .info(rhsTheme, rhsText) = rhs, lhsTheme === rhsTheme, lhsText == rhsText {
+                return true
+            }
+            return false
+        case let .shadowTheme(lhsTheme, lhsText):
+            if case let .shadowTheme(rhsTheme, rhsText) = rhs, lhsTheme === rhsTheme, lhsText == rhsText {
+                return true
+            }
+            return false
+        case let .shadowThemeInfo(lhsTheme, lhsText):
+            if case let .shadowThemeInfo(rhsTheme, rhsText) = rhs, lhsTheme === rhsTheme, lhsText == rhsText {
                 return true
             }
             return false
@@ -166,8 +189,51 @@ private enum GhostgramSettingsEntry: ItemListNodeEntry {
             )
         case let .info(_, text):
             return ItemListTextItem(presentationData: presentationData, text: .plain(text), sectionId: self.section)
+        case let .shadowTheme(_, text):
+            return ItemListActionItem(
+                presentationData: presentationData,
+                title: text,
+                kind: .generic,
+                alignment: .natural,
+                sectionId: self.section,
+                style: .blocks,
+                action: {
+                    arguments.applyShadowTheme()
+                }
+            )
+        case let .shadowThemeInfo(_, text):
+            return ItemListTextItem(presentationData: presentationData, text: .plain(text), sectionId: self.section)
         }
     }
+}
+
+// MARK: - Shadow theme
+
+// Tinted night theme with a violet accent (tints the backgrounds), violet bubbles and a dark animated gradient
+private let shadowThemeWallpaper: TelegramWallpaper = .gradient(TelegramWallpaper.Gradient(
+    id: nil,
+    colors: [0x1c1238, 0x0b0818, 0x2a1752, 0x120c28],
+    settings: WallpaperSettings()
+))
+
+private let shadowThemeAccentColor = PresentationThemeAccentColor(
+    index: 777,
+    baseColor: .custom,
+    accentColor: 0x8b6cff,
+    bubbleColors: [0x7b5cff, 0x4a2fc0],
+    wallpaper: shadowThemeWallpaper
+)
+
+private func applyShadowTheme(context: AccountContext) {
+    let _ = updatePresentationThemeSettingsInteractively(accountManager: context.sharedContext.accountManager, { current in
+        var updated = current
+        let themeReference: PresentationThemeReference = .builtin(.nightAccent)
+        updated.theme = themeReference
+        updated.themeSpecificAccentColors[themeReference.index] = shadowThemeAccentColor
+        updated.themeSpecificChatWallpapers[coloredThemeIndex(reference: themeReference, accentColor: shadowThemeAccentColor)] = shadowThemeWallpaper
+        updated.automaticThemeSwitchSetting.theme = themeReference
+        return updated
+    }).start()
 }
 
 // MARK: - Arguments
@@ -179,14 +245,16 @@ private final class GhostgramSettingsControllerArguments {
     let openDeviceSpoof: () -> Void
     let openVoiceMorpher: () -> Void
     let openSendDelay: () -> Void
-    
+    let applyShadowTheme: () -> Void
+
     init(
         openDeletedMessages: @escaping () -> Void,
         openGhostMode: @escaping () -> Void,
         openMisc: @escaping () -> Void,
         openDeviceSpoof: @escaping () -> Void,
         openVoiceMorpher: @escaping () -> Void,
-        openSendDelay: @escaping () -> Void
+        openSendDelay: @escaping () -> Void,
+        applyShadowTheme: @escaping () -> Void
     ) {
         self.openDeletedMessages = openDeletedMessages
         self.openGhostMode = openGhostMode
@@ -194,6 +262,7 @@ private final class GhostgramSettingsControllerArguments {
         self.openDeviceSpoof = openDeviceSpoof
         self.openVoiceMorpher = openVoiceMorpher
         self.openSendDelay = openSendDelay
+        self.applyShadowTheme = applyShadowTheme
     }
 }
 
@@ -258,8 +327,12 @@ private func ghostgramSettingsControllerEntries(
     entries.append(.sendDelay(presentationData.theme, "Отложка сообщений", sendDelayStatus))
     
     // Info
-    entries.append(.info(presentationData.theme, "Функции конфиденциальности Ghostgram. Скрытые отметки о прочтении, обход исчезающих сообщений, обход защиты от пересылки и другое."))
-    
+    entries.append(.info(presentationData.theme, "Функции конфиденциальности Shadowgram. Скрытые отметки о прочтении, обход исчезающих сообщений, обход защиты от пересылки и другое."))
+
+    // Appearance
+    entries.append(.shadowTheme(presentationData.theme, "Применить тему Shadow"))
+    entries.append(.shadowThemeInfo(presentationData.theme, "Тёмная тема в цветах Shadowgram: фиолетовые акценты и пузыри, анимированный фон. Вернуть обычную тему можно в Настройки → Оформление. Сменить иконку — там же, в разделе «Иконка приложения»."))
+
     return entries
 }
 
@@ -289,6 +362,9 @@ public func ghostgramSettingsController(context: AccountContext) -> ViewControll
         },
         openSendDelay: {
             pushControllerImpl?(sendDelayController(context: context), true)
+        },
+        applyShadowTheme: {
+            applyShadowTheme(context: context)
         }
     )
     
