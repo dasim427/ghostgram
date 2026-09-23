@@ -3,7 +3,6 @@ import SGLogging
 import SGGHSettingsScheme
 import AccountContext
 import TelegramCore
-import SwiftSignalKit
 
 
 public func updateSGGHSettingsInteractivelly(context: AccountContext) {
@@ -12,13 +11,13 @@ public func updateSGGHSettingsInteractivelly(context: AccountContext) {
     let _ = Task {
         do {
             let settings = try await fetchSGGHSettings(locale: locale)
-            let _ = context.account.postbox.transaction { transaction in
+            let _ = await (context.account.postbox.transaction { transaction in
                 updateAppConfiguration(transaction: transaction, { configuration -> AppConfiguration in
                     var configuration = configuration
                     configuration.sgGHSettings = settings
                     return configuration
                 })
-            }.start()
+            }).task()
         } catch {
             return
         }

@@ -1,7 +1,6 @@
 import Foundation
 import SwiftSignalKit
 import TelegramCore
-import TelegramUIPreferences
 
 public struct SGStatus: Equatable, Codable {
     public var status: Int64
