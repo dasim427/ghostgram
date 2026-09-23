@@ -449,7 +449,7 @@ private final class GiftUpgradeVariantsScreenComponent: Component {
                         itemId += "\(file.fileId.id)"
                         if self.selectedSection == .models {
                             title = name
-                            rarity = rarityValue.permilleValue
+                            rarity = rarityValue
                             modelAttribute = attribute
                             
                             if case let .model(_, selectedFile, _, _) = self.selectedModel {
@@ -462,7 +462,7 @@ private final class GiftUpgradeVariantsScreenComponent: Component {
                         itemId += "\(id)"
                         if self.selectedSection == .backdrops {
                             title = name
-                            rarity = rarityValue.permilleValue
+                            rarity = rarityValue
                             backdropAttribute = attribute
                             
                             if case let .backdrop(_, selectedId, _, _, _, _, _) = self.selectedBackdrop {
@@ -475,7 +475,7 @@ private final class GiftUpgradeVariantsScreenComponent: Component {
                         itemId += "\(file.fileId.id)"
                         if self.selectedSection == .symbols {
                             title = name
-                            rarity = rarityValue.permilleValue
+                            rarity = rarityValue
                             symbolAttribute = attribute
                             
                             if case let .pattern(_, selectedFile, _) = self.selectedSymbol {
@@ -1381,15 +1381,15 @@ private final class AttributeInfoComponent: Component {
             case let .model(name, _, rarityValue, _):
                 title = name
                 subtitle = component.strings.Gift_Variants_Model
-                rarity = rarityValue.permilleValue
+                rarity = rarityValue
             case let .backdrop(name, _, _, _, _, _, rarityValue):
                 title = name
                 subtitle = component.strings.Gift_Variants_Backdrop
-                rarity = rarityValue.permilleValue
+                rarity = rarityValue
             case let .pattern(name, _, rarityValue):
                 title = name
                 subtitle = component.strings.Gift_Variants_Symbol
-                rarity = rarityValue.permilleValue
+                rarity = rarityValue
             default:
                 title = ""
                 subtitle = ""

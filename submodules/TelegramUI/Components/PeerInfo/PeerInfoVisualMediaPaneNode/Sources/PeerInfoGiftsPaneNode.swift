@@ -989,7 +989,7 @@ public final class PeerInfoGiftsPaneNode: ASDisplayNode, PeerInfoPaneNode, UIScr
         
         var items: [ContextMenuItem] = []
         if canManage {
-            let addToCollectionItem: ContextMenuActionItem = ContextMenuActionItem(text: strings.PeerInfo_Gifts_Context_AddToCollection, textLayout: .twoLinesMax, icon: { theme in generateTintedImage(image: UIImage(bundleImageName: "Peer Info/Gifts/AddToCollection"), color: theme.contextMenu.primaryColor) }, action: { [weak self] c, f in
+            items.append(.action(ContextMenuActionItem(text: strings.PeerInfo_Gifts_Context_AddToCollection, textLayout: .twoLinesMax, icon: { theme in generateTintedImage(image: UIImage(bundleImageName: "Peer Info/Gifts/AddToCollection"), color: theme.contextMenu.primaryColor) }, action: { [weak self] c, f in
                 var subItems: [ContextMenuItem] = []
                 
                 subItems.append(.action(ContextMenuActionItem(text: strings.Common_Back, textColor: .primary, icon: { theme in
@@ -1090,8 +1090,7 @@ public final class PeerInfoGiftsPaneNode: ASDisplayNode, PeerInfoPaneNode, UIScr
                 }
                 
                 c?.pushItems(items: .single(ContextController.Items(content: .list(subItems))))
-            })
-            items.append(.action(addToCollectionItem))
+            })))
             items.append(.separator)
         }
         
@@ -1278,7 +1277,7 @@ public final class PeerInfoGiftsPaneNode: ASDisplayNode, PeerInfoPaneNode, UIScr
         }
         
         if canManage {
-            let toggleVisibilityItem: ContextMenuActionItem = ContextMenuActionItem(text: gift.savedToProfile ? strings.PeerInfo_Gifts_Context_Hide : strings.PeerInfo_Gifts_Context_Show, icon: { theme in generateTintedImage(image: UIImage(bundleImageName: gift.savedToProfile ? "Peer Info/HideIcon" : "Peer Info/ShowIcon"), color: theme.contextMenu.primaryColor) }, action: { [weak self] c, f in
+            items.append(.action(ContextMenuActionItem(text: gift.savedToProfile ? strings.PeerInfo_Gifts_Context_Hide : strings.PeerInfo_Gifts_Context_Show, icon: { theme in generateTintedImage(image: UIImage(bundleImageName: gift.savedToProfile ? "Peer Info/HideIcon" : "Peer Info/ShowIcon"), color: theme.contextMenu.primaryColor) }, action: { [weak self] c, f in
                 c?.dismiss(completion: { [weak self] in
                     guard let self else {
                         return
@@ -1320,8 +1319,7 @@ public final class PeerInfoGiftsPaneNode: ASDisplayNode, PeerInfoPaneNode, UIScr
                         }
                     }
                 })
-            })
-            items.append(.action(toggleVisibilityItem))
+            })))
             
             if case let .unique(uniqueGift) = gift.gift {
                 items.append(.action(ContextMenuActionItem(text: strings.PeerInfo_Gifts_Context_Transfer, icon: { theme in generateTintedImage(image: UIImage(bundleImageName: "Peer Info/TransferIcon"), color: theme.contextMenu.primaryColor) }, action: { [weak self] c, f in
@@ -1379,7 +1377,7 @@ public final class PeerInfoGiftsPaneNode: ASDisplayNode, PeerInfoPaneNode, UIScr
         }
         
         if canManage, case let .collection(id) = self.currentCollection {
-            let removeFromCollectionItem: ContextMenuActionItem = ContextMenuActionItem(text: strings.PeerInfo_Gifts_Context_RemoveFromCollection, textColor: .destructive, textLayout: .twoLinesMax, icon: { theme in generateTintedImage(image: UIImage(bundleImageName: "Peer Info/Gifts/RemoveFromCollection"), color: theme.contextMenu.destructiveColor) }, action: { [weak self] c, f in
+            items.append(.action(ContextMenuActionItem(text: strings.PeerInfo_Gifts_Context_RemoveFromCollection, textColor: .destructive, textLayout: .twoLinesMax, icon: { theme in generateTintedImage(image: UIImage(bundleImageName: "Peer Info/Gifts/RemoveFromCollection"), color: theme.contextMenu.destructiveColor) }, action: { [weak self] c, f in
                 f(.default)
                 
                 guard let self else {
@@ -1420,8 +1418,7 @@ public final class PeerInfoGiftsPaneNode: ASDisplayNode, PeerInfoPaneNode, UIScr
                     )
                     self.parentController?.present(undoController, in: .current)
                 }
-            })
-            items.append(.action(removeFromCollectionItem))
+            })))
         }
         
         guard !items.isEmpty else {

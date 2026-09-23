@@ -533,8 +533,6 @@ private final class NavigationButtonItemNode: ImmediateTextNode {
 
 
 public final class NavigationButtonNodeImpl: ContextControllerSourceNode, NavigationButtonNode {
-<<<<<<<< HEAD:submodules/Display/Source/NavigationButtonNode.swift
-========
     enum ContentType {
         case accent
         case accentDisabled
@@ -545,7 +543,6 @@ public final class NavigationButtonNodeImpl: ContextControllerSourceNode, Naviga
     private var isBack: Bool = false
     
     private var items: [UIBarButtonItem] = []
->>>>>>>> swiftgram/master:submodules/TelegramUI/Components/NavigationBarImpl/Sources/NavigationButtonNode.swift
     private var nodes: [NavigationButtonItemNode] = []
     
     var requestUpdate: (() -> Void)?

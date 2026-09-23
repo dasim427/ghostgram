@@ -462,10 +462,6 @@ public final class CallListController: TelegramBaseController {
         return self.controllerNode.navigationEdgeEffectExtension
     }
     
-    override public var navigationEdgeEffectExtension: CGFloat {
-        return self.controllerNode.navigationEdgeEffectExtension
-    }
-    
     override public func containerLayoutUpdated(_ layout: ContainerViewLayout, transition: ContainedViewLayoutTransition) {
         super.containerLayoutUpdated(layout, transition: transition)
         

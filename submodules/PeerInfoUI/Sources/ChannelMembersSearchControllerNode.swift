@@ -339,7 +339,7 @@ class ChannelMembersSearchControllerNode: ASDisplayNode {
                                         }
                                 }
                             }
-                        case .promote, .ownershipTransfer:
+                        case .promote:
                             if peer.id == context.account.peerId {
                                 continue
                             }

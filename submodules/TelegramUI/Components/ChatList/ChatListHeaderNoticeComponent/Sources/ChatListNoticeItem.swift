@@ -188,17 +188,11 @@ final class ChatListNoticeItemNode: ItemListRevealOptionsItemNode {
             var textHighlightAction: (([NSAttributedString.Key: Any]) -> NSAttributedString.Key?)?
             
             switch item.notice {
-<<<<<<<< HEAD:submodules/ChatListUI/Sources/Node/ChatListNoticeItem.swift
-            case let .sgUrl(_, title, text, _, _, _):
-                let titleStringValue = NSMutableAttributedString(attributedString: NSAttributedString(string: title, font: titleFont, textColor: item.theme.rootController.navigationBar.primaryTextColor))
-                titleString = titleStringValue
-========
             // MARK: Swiftgram
             case let .sgUrl(_, title, text, _, _, _):
                 let titleStringValue = NSMutableAttributedString(attributedString: NSAttributedString(string: title, font: titleFont, textColor: item.theme.rootController.navigationBar.primaryTextColor))
                 titleString = titleStringValue
                 
->>>>>>>> swiftgram/master:submodules/TelegramUI/Components/ChatList/ChatListHeaderNoticeComponent/Sources/ChatListNoticeItem.swift
                 textString = NSAttributedString(string: text ?? "", font: textFont, textColor: item.theme.rootController.navigationBar.secondaryTextColor)
             case let .clearStorage(sizeFraction):
                 let sizeString = dataSizeString(Int64(sizeFraction), formatting: DataSizeStringFormatting(strings: item.strings, decimalSeparator: "."))
