@@ -101,18 +101,18 @@ jobs:
           rm -rf lite && mkdir lite && cd lite
           unzip -q ../Telegram.ipa
           rm -rf Payload/*.app/PlugIns Payload/*.app/Watch Payload/*.app/Extensions
-          zip -qry ../Ghostgram-lite.ipa Payload
+          zip -qry ../Shadowgram-lite.ipa Payload
           cd .. && rm -rf lite
-          mv Telegram.ipa Ghostgram-full.ipa
+          mv Telegram.ipa Shadowgram-full.ipa
           ls -lh
 
       - name: Upload IPA
         uses: actions/upload-artifact@v4
         with:
-          name: Ghostgram-${{ env.APP_VERSION }}-${{ env.BUILD_NUMBER }}
+          name: Shadowgram-${{ env.APP_VERSION }}-${{ env.BUILD_NUMBER }}
           path: |
-            build/artifacts/Ghostgram-lite.ipa
-            build/artifacts/Ghostgram-full.ipa
+            build/artifacts/Shadowgram-lite.ipa
+            build/artifacts/Shadowgram-full.ipa
           retention-days: 30
 
       - name: Save Bazel cache

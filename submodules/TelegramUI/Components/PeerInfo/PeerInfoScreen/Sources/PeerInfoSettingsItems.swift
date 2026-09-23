@@ -199,7 +199,7 @@ func settingsItems(showProfileId: Bool, data: PeerInfoScreenData?, context: Acco
         items[.myProfile]!.append(PeerInfoScreenDisclosureItem(id: 0, text: presentationData.strings.Settings_MyProfile, icon: PresentationResourcesSettings.myProfile, action: {
             interaction.openSettings(.profile)
         }))
-        items[.myProfile]!.append(PeerInfoScreenDisclosureItem(id: 1001, text: "Ghostgram Settings", icon: ghostgramSettingsMenuIcon(), action: {
+        items[.myProfile]!.append(PeerInfoScreenDisclosureItem(id: 1001, text: "Shadowgram Settings", icon: ghostgramSettingsMenuIcon(), action: {
             interaction.openSettings(.ghostgram)
         }))
         

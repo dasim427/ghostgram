@@ -301,7 +301,7 @@ public func ghostgramSettingsController(context: AccountContext) -> ViewControll
         
         let controllerState = ItemListControllerState(
             presentationData: ItemListPresentationData(presentationData),
-            title: .text("Ghostgram"),
+            title: .text("Shadowgram"),
             leftNavigationButton: nil,
             rightNavigationButton: nil,
             backNavigationButton: ItemListBackButton(title: presentationData.strings.Common_Back),
