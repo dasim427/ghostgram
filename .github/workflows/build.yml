@@ -80,6 +80,9 @@ jobs:
           echo "BUILD_NUMBER=$BUILD_NUMBER" >> $GITHUB_ENV
           echo "APP_VERSION=$APP_VERSION" >> $GITHUB_ENV
 
+          # The self-signed fake certificate isn't a "valid" identity on macOS 26,
+          # so sign ad-hoc instead; Sideloadly re-signs with the user's Apple ID anyway.
+          echo 'build --ios_signing_cert_name=-' >> .bazelrc
           python3 build-system/Make/ImportCertificates.py --path build-system/fake-codesigning/certs
           python3 -u build-system/Make/Make.py \
             --cacheDir="$HOME/telegram-bazel-cache" \
