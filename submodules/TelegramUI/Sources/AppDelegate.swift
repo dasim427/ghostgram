@@ -955,6 +955,7 @@ private func extractAccountManagerState(records: AccountRecordsView<TelegramAcco
                     PresentationAppIcon(name: "ShadowViolet", imageName: "ShadowViolet"),
                     PresentationAppIcon(name: "ShadowBlue", imageName: "ShadowBlue"),
                     PresentationAppIcon(name: "ShadowLight", imageName: "ShadowLight"),
+                    PresentationAppIcon(name: "ShadowBlack", imageName: "ShadowBlack"),
                     PresentationAppIcon(name: "ShadowRed", imageName: "ShadowRed")
                 ]
 

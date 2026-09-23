@@ -393,6 +393,8 @@ class ThemeSettingsAppIconItemNode: ListViewItemNode, ItemListItemNode {
                                     name = "Blue"
                                 case "ShadowLight":
                                     name = "Light"
+                                case "ShadowBlack":
+                                    name = "Black"
                                 case "ShadowRed":
                                     name = "Red"
                                 default:

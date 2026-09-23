@@ -310,6 +310,7 @@ alternate_icon_folders = [
     "ShadowViolet",
     "ShadowBlue",
     "ShadowLight",
+    "ShadowBlack",
     "ShadowRed",
 ]
 
