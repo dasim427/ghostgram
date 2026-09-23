@@ -101,11 +101,11 @@ jobs:
           # The lite build drops extensions and the Watch app so it fits.
           cd build/artifacts
           rm -rf lite && mkdir lite && cd lite
-          unzip -q ../Telegram.ipa
+          unzip -q ../Swiftgram.ipa
           rm -rf Payload/*.app/PlugIns Payload/*.app/Watch Payload/*.app/Extensions
           zip -qry ../Shadowgram-lite.ipa Payload
           cd .. && rm -rf lite
-          mv Telegram.ipa Shadowgram-full.ipa
+          mv Swiftgram.ipa Shadowgram-full.ipa
           ls -lh
 
       - name: Upload IPA
